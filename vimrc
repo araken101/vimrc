@@ -11,63 +11,55 @@ inoremap { {}<Left>
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap ( ()<ESC>i
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
-"""""""""""""""""""""""""""
-"Start Neobundle Settings.
-"---------------------------
-" bundleで管理するディレクトリを指定
-set runtimepath+=~/.vim/bundle/neobundle.vim/
-" Required:
- call neobundle#begin(expand('~/.vim/bundle/'))
 
-" neobundle自体をneobundleで管理
-NeoBundleFetch 'Shougo/neobundle.vim'
-
+" NeoBundleの開発が終わったのですべてDein.vimに移行します
 " 今後このあたりに追加のプラグインをどんどん書いて行きます！！"
-" NERDTreeを設定"
-" NeoBundle 'scrooloose/nerdtree'
+"Dein Script-----------------------------
+if &compatible
+	set nocompatible	"Be iMproved
+endif
+"Required:
+set runtimepath^=~/.vim/dein/repos/github.com/Shougo/dein.vim
+"Required:
+call dein#begin(expand('~/.vim/dein'))
+
+" Let dein manage dein
+call dein#add('Shougo/dein.vim')
 "lightlineの設定"
-NeoBundle 'itchyny/lightline.vim'
+call dein#add('itchyny/lightline.vim')
 "テーマの設定
-NeoBundle 'altercation/vim-colors-solarized'
+call dein#add('altercation/vim-colors-solarized')
 "vim-quickrunの設定
-NeoBundle 'thinca/vim-quickrun'
+call dein#add('thinca/vim-quickrun')
 "javascriptのインデント設定"
-NeoBundle 'pangloss/vim-javascript'
-"javascriptのシンタックスハイライト"
-NeoBundle 'JavaScript-syntax'
-"processingの設定"
-NeoBundle 'sophacles/vim-processing'
-NeoBundle 'hynek/vim-python-pep8-indent'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'hokaccha/vim-html5validator'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'tell-k/vim-browsereload-mac'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'kana/vim-smartinput'
-NeoBundle 'kana/vim-operator-user'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-operator-replace'
-NeoBundle 'hynek/vim-python-pep8-indent'
-NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'bps/vim-textobj-python'
-NeoBundle 'Shougo/vimproc',{
-	\'build':{
-	\	'mac':'make -f make_mac.mak',
-	\},
-\}
+call dein#add('pangloss/vim-javascript')
+"javascriptのシンタックスハイライト
+call dein#add('JavaScript-syntax')
+"processingの設定
+call dein#add('hynek/vim-python-pep8-indent')
+call dein#add('Shougo/neocomplete.vim')
+call dein#add('bronson/vim-trailing-whitespace')
+call dein#add('tomtom/tcomment_vim')
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
+call dein#add('othree/html5.vim')
+call dein#add('hail2u/vim-css3-syntax')
+call dein#add('jelera/vim-javascript-syntax')
+call dein#add('hokaccha/vim-html5validator')
+call dein#add('tyru/open-browser.vim')
+call dein#add('tell-k/vim-browsereload-mac')
+call dein#add('mattn/emmet-vim')
+call dein#add('Shougo/unite.vim')
+call dein#add('scrooloose/nerdtree')
+call dein#add('tpope/vim-fugitive')
+call dein#add('kana/vim-smartinput')
+call dein#add('kana/vim-operator-user')
+call dein#add('kana/vim-textobj-user')
+call dein#add('kana/vim-operator-replace')
+call dein#add('hynek/vim-python-pep8-indent')
+call dein#add('bps/vim-textobj-python')
 au BufNewFile,BufRead *.pde setf processing
 "python"
-call neobundle#end()
 
 
 let g:syntastic_mode_map = {
@@ -92,12 +84,6 @@ if has('lua') && ((v:version == 703 && has('patch885'))||(v:version >= 704))
 		\ "autoload":{"insert":1}}
 endif
 
-if ! empty(neobundle#get("neocomplete.vim"))
-	autocmd FileType python setlocal completeopt-=preview
-endif
-"python_foldの設定"
-NeoBundleLazy "vim-scripts/python_fold",{
-	\ "autoload":{"filetypes":["python","python3","djangohtml"] }}
 "jedi-vim"
 "rename用のマッピングを無効にしたため、代わりにコマンドを定義
 command! -nargs=0 JediRename :call jedi#rename()
@@ -106,11 +92,13 @@ let g:jedi#rename_command = ""
 let g:jedi#documentation_command = "k"
 
 " Required:
+" you can specify revision/branch/tag.
+call dein#add('Shougo/vimshell', { 'rev': '3787e5' })  
+" Required:
+call dein#end()
 filetype plugin indent on
 "未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
 "毎回聞かれると邪魔な場合もあるので、この設定は任意です。
-NeoBundleCheck
-
 syntax enable
 set background=dark
 colorscheme solarized
